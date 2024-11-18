@@ -1,0 +1,30 @@
+services:
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container
+    ports:
+      - "80:80"
+    volumes:
+      - app-data:/var/www/html
+
+  php:
+    build: ./php/
+    container_name: php-container
+    expose:
+      - "9000"
+    volumes:
+      - app-data:/var/www/html
+  mysql:
+      image: mysql:5.7
+      container_name: mysql-container
+      volumes:
+        - mysql-data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: mydb
+        MYSQL_USER: myuser
+        MYSQL_PASSWORD: password
+        
+volumes:
+  app-data:
+  mysql-data:
